@@ -23,19 +23,19 @@ class ProductManager {
                 return []
             }
         } catch (error) {
-            info = 'La base de datos no se puedo leer'
+            info = {info: 'La base de datos no se puedo leer'}
         }
         return info
     }
 
-    addProduct(title, description, price, thumbnail, code, stock) {
+    addProduct(title, description, price, thumbnail, code, stock, category, status) {
 
         let info
         //Confirmamos que el code no se repita
         const verifyCode = this.products.some(p => p.code === code)
 
         if (verifyCode) {
-            info = `El código ${code} esta en uso`
+            info = {info:`El código ${code} esta en uso`}
         } else {
 
             //Validamos que todos los campos son obligatorios
@@ -45,10 +45,23 @@ class ProductManager {
                 price,
                 thumbnail,
                 code,
-                stock
+                stock, 
+                category,
+                status: status || true,
             };
 
-            if (!Object.values(newProduscts).includes(undefined)) {
+            if(!Object.values(newProduscts.title).includes(undefined) || !Object.values(newProduscts.description).includes(undefined) ||!Object.values(newProduscts.price).includes(undefined) ||!Object.values(newProduscts.code).includes(undefined) ||!Object.values(newProduscts.stock).includes(undefined) ||!Object.values(newProduscts.category).includes(undefined)){
+
+                // Incrementams el id
+                ProductManager.id++;
+                this.products.push({
+                    // Llamammos al id autoincremental
+                    id: ProductManager.id, ...newProduscts
+                })
+                fs.writeFileSync(this.#path, JSON.stringify(this.products))
+                info = {info:"Producto agregado corectamente..."}
+
+            /* if (!Object.values(newProduscts).includes(undefined)) {
                 // Incrementams el id
                 ProductManager.id++;
                 this.products.push({
@@ -56,10 +69,10 @@ class ProductManager {
                     id: ProductManager.id, ...newProduscts
                 })
                 fs.writeFileSync(this.#path, JSON.stringify(this.products))
-                info = "Producto agregado corectamente..."
+                info = "Producto agregado corectamente..." */
 
             } else {
-                info = "Falta completar datos"
+                info = {info:"Falta completar datos"}
             }
         }
         return info

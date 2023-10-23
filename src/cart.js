@@ -8,10 +8,10 @@ class Cart {
   #path
 
   constructor() {
-    this.#path = './BD_cart.json'
+    this.#path = './cart.json'
     this.cart = this.#readFile()
     Cart.id = this.cart.length > 0 ? this.cart[this.cart.length - 1].id : 0
-    this.products = new ProductManager('./bd.json')
+    this.products = new ProductManager('./products.json')
   }
 
   #readFile() {

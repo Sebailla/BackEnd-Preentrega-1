@@ -3,7 +3,7 @@ import ProductManager from '../productManager.js'
 
 const router = Router()
 
-const products = new ProductManager('BD.json')
+const products = new ProductManager('products.json')
 
 router.get('/api/products', (req, res) => {
   
@@ -25,8 +25,8 @@ router.get('/api/products/:pid', (req, res) => {
 })
 
 router.post('/api/products', (req, res) => {
-  const {title, description, price, thumbnail, code, stock} = req.body
-  const addProduct = products.addProduct(title, description, price, thumbnail, code, stock)
+  const {title, description, price, thumbnail, code, stock, category, status} = req.body
+  const addProduct = products.addProduct(title, description, price, thumbnail, code, stock, category, status)
   
   return res.json({addProduct})
 })
