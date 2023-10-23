@@ -13,11 +13,11 @@ app.get('/', (req, res) => {
 
 // Router Products
 
-app.use('/', products)
+app.use('/api/products', products)
 
 // Router Cart 
 
-app.use('/', cart)
+app.use('/api/cart', cart)
 
 
 app.listen(8080, () => { console.log('listening on port 8080 ...') })
