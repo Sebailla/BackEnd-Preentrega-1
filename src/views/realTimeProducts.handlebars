@@ -1,0 +1,38 @@
+<div>
+  <hr>
+  <h1>Productos en tiempo real</h1>
+  <hr>
+  <h3>Nuevo Producto</h3>
+  <form>
+    Titulo: <input type="text" id="title"><br>
+    Descripción: <input type="text" id="description"><br>
+    Precio: $ <input type="number" id="price"><br>
+    Imagen: <input type="" id="thumbnail"><br>
+    Código<input type="text" id="code"><br>
+    Stock: <input type="number" id="stock"><br>
+    Categoría: <input type="text" id="category"><br>
+  </form>
+  <br>
+  <button class="btnAddProduct"> Guadar Producto </button>
+  <hr>
+
+  <table class="productsTable">
+    <thead>
+      <tr>
+        <th>Imagen</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/socketClient.js"></script>

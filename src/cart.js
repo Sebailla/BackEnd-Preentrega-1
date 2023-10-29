@@ -38,7 +38,7 @@ class Cart {
       this.cart.push(newCart)
       fs.writeFileSync(this.#path, JSON.stringify(this.cart))
       console.log(JSON.stringify(this.cart))
-      return info = "Producto agregado corectamente al Carrito..."
+      return info = "Se creo un nuevo Carrito..."
     } catch (error) {
       return info = 'Error al crear Cart'
     }
