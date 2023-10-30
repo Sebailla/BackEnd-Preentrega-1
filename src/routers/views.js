@@ -8,11 +8,11 @@ const router = Router()
 
 router.get('/products', (req, res) => {
   const prod = products.getProduct()
-  return res.render('home', {products: prod})
+  return res.render('home', {products: prod, title: 'Productos'})
 })
 
 router.get('/realtimeproducts', (req, res) => {
-  res.render('realTimeProducts')
+  return res.render('realTimeProducts', {title:'Productos en tiempo real'})
 })
 
 router.get('*', (req, res) => {

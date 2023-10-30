@@ -23,13 +23,18 @@ socket.on('getProducts', (dataProducts) => {
     const row = document.createElement('tr')
     row.innerHTML =
       `
+      <td>${p.id}</td>
       <td><img src="${p.thumbnail}" alt="${p.title}" width="50" height="100"></td>
       <td>${p.title}</td>
       <td>${p.description}</td>
       <td> $ ${p.price}</td>
       <td>${p.stock}</td>
       <td>
-      <button class="btnDeleteProduct" data-id="${p.id}">Delete</button>
+      <button type="button" class="btn btn-outline-info btnDeleteProduct" data-id="${p.id}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+          <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+          </svg>
+      </button>
       </td>
       `
     tbody.appendChild(row)
@@ -41,26 +46,36 @@ socket.on('getProducts', (dataProducts) => {
       socket.emit('getProducts', productId)
     })
   })
-
+  //----------------------------------------------------------------
   // Metodo post
 
-  document.querySelector('.btnAddProduct').onclick = () => {
-    // Acceder a los valores de los campos
-    let titulo = document.getElementById("title").value;
-    let descripcion = document.getElementById("description").value;
-    let precio = document.getElementById("price").value;
-    let imagen = document.getElementById("thumbnail").value;
-    let codigo = document.getElementById("code").value;
-    let stock = document.getElementById("stock").value;
-    let categoria = document.getElementById("category").value;
+  document.querySelector('.btnAddProduct').addEventListener('click', () => {
 
-    // Crear un objeto con los valores
-    let saveDatos = {titulo, descripcion,precio,imagen,codigo,stock,categoria}
+    // Recopilar los valores de los campos en un JSON
+    const productData = {
+      title: document.getElementById("title").value,
+      description: document.getElementById("description").value,
+      price: document.getElementById("price").value,
+      thumbnail: document.getElementById("thumbnail").value,
+      code: document.getElementById("code").value,
+      stock: document.getElementById("stock").value,
+      category: document.getElementById("category").value
+    }
 
-    console.log(saveDatos)
-    const dataJson = JSON.parse(saveDatos)
+    if (productData.title === "" || productData.description === "" || productData.price === "" || productData.code === "" || productData.stock === "" || productData.category === "") {
+      alert('Debe llenar todo los campos del Producto: ' + productData.title)
+    } else {
 
-    socket.emit('postProducts', dataJson);
-  }
+      // Enviar los datos al servidor
+      fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData)
+      })
+    }
+    formAddProduct.reset()
+  })
 })
 

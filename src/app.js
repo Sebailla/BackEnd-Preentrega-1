@@ -57,8 +57,8 @@ socketServer.on('connection', socket => {
   })
 
   // Agregamos productos
-  socket.on('postProducts', (dataJson) => {
-    prod.addProduct(dataJson)
+  socket.on('postProducts', (productData) => {
+    prod.addProduct(productData)
     socket.emit('postProducts', prod.getProduct())
   })
 
